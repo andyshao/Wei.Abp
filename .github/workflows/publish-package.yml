@@ -1,0 +1,32 @@
+name: publish to nuget
+on:
+  push:
+    branches:
+      - main # Default release branch
+jobs:
+  publish:
+    name: list on nuget
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: publish Wei.Abp.BlobStoring.TencentCloudCos
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/Wei.Abp.BlobStoring.TencentCloudCos/Wei.Abp.BlobStoring.TencentCloudCos.csproj
+          VERSION_FILE_PATH: common.props
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+jobs:
+  publish:
+    name: list on nuget
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: publish Wei.Abp.Sms.TencentCloud
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/Wei.Abp.Sms.TencentCloud/Wei.Abp.Sms.TencentCloud.csproj
+          VERSION_FILE_PATH: common.props
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}

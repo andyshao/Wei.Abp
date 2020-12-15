@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Wei</RootNamespace>
+  </PropertyGroup>
+  
+  <Import Project="..\..\common.props" />
+  
+  <ItemGroup>
+    <PackageReference Include="TencentCloudSDK" Version="3.0.97" />
+    <PackageReference Include="Volo.Abp.Settings" Version="4.0.0" />
+    <PackageReference Include="Volo.Abp.Sms" Version="4.0.0" />
+  </ItemGroup>
+
+</Project>
+

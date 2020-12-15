@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{35A7A756-3114-4B54-ADD1-F6D3E306575F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D677863B-4984-4897-8BB4-0246D602B3B3}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DCCE42C7-C9D3-43DE-931D-B6A68FD0D1D3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.BlobStoring.TencentCloudCos", "src\Wei.Abp.BlobStoring.TencentCloudCos\Wei.Abp.BlobStoring.TencentCloudCos.csproj", "{89CB9204-A1A7-4B22-9D2E-25AF0FBFD26A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Sms.TencentCloud", "src\Wei.Abp.Sms.TencentCloud\Wei.Abp.Sms.TencentCloud.csproj", "{EBA100F7-A9B0-40AF-A048-F86C118C1D05}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.BlobStoring.TencentCloudCos.Tests", "test\Wei.Abp.BlobStoring.TencentCloudCos.Tests\Wei.Abp.BlobStoring.TencentCloudCos.Tests.csproj", "{30BA78A4-8BC0-4C33-8FEB-FC1C8E32CE4C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Sms.TencentCloud.Tests", "test\Wei.Abp.Sms.TencentCloud.Tests\Wei.Abp.Sms.TencentCloud.Tests.csproj", "{09347707-62E3-43D5-BE43-2E6C8B87FCE3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89CB9204-A1A7-4B22-9D2E-25AF0FBFD26A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89CB9204-A1A7-4B22-9D2E-25AF0FBFD26A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89CB9204-A1A7-4B22-9D2E-25AF0FBFD26A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89CB9204-A1A7-4B22-9D2E-25AF0FBFD26A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBA100F7-A9B0-40AF-A048-F86C118C1D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBA100F7-A9B0-40AF-A048-F86C118C1D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBA100F7-A9B0-40AF-A048-F86C118C1D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBA100F7-A9B0-40AF-A048-F86C118C1D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30BA78A4-8BC0-4C33-8FEB-FC1C8E32CE4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30BA78A4-8BC0-4C33-8FEB-FC1C8E32CE4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30BA78A4-8BC0-4C33-8FEB-FC1C8E32CE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30BA78A4-8BC0-4C33-8FEB-FC1C8E32CE4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09347707-62E3-43D5-BE43-2E6C8B87FCE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09347707-62E3-43D5-BE43-2E6C8B87FCE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09347707-62E3-43D5-BE43-2E6C8B87FCE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09347707-62E3-43D5-BE43-2E6C8B87FCE3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{89CB9204-A1A7-4B22-9D2E-25AF0FBFD26A} = {35A7A756-3114-4B54-ADD1-F6D3E306575F}
+		{EBA100F7-A9B0-40AF-A048-F86C118C1D05} = {35A7A756-3114-4B54-ADD1-F6D3E306575F}
+		{30BA78A4-8BC0-4C33-8FEB-FC1C8E32CE4C} = {DCCE42C7-C9D3-43DE-931D-B6A68FD0D1D3}
+		{09347707-62E3-43D5-BE43-2E6C8B87FCE3} = {DCCE42C7-C9D3-43DE-931D-B6A68FD0D1D3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B1BCCC3-8E74-4B30-98EF-A2FBC4E6CB7A}
+	EndGlobalSection
+EndGlobal

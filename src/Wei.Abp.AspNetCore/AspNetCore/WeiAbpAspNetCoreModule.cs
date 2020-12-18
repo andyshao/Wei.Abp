@@ -20,7 +20,6 @@ namespace Wei.Abp.AspNetCore.AspNetCore
                 options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
             });
 
-
         }
     }
 }

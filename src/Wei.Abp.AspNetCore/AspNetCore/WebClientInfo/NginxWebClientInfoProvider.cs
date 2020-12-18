@@ -22,8 +22,9 @@ namespace Wei.Abp.AspNetCore.WebClientInfo
             {
                 Logger.LogInformation($"{item.Key}:{item.Value}");
             }
-            
+
             StringValues? xForwardedfor = HttpContextAccessor.HttpContext?.Request?.Headers?["X-Forwarded-For"];
+            Logger.LogInformation($"X-Forwarded-For:{xForwardedfor}");
             string clientIpAddress = xForwardedfor.HasValue ? xForwardedfor.Value.ToString() : base.GetClientIpAddress();
             return clientIpAddress;
         }

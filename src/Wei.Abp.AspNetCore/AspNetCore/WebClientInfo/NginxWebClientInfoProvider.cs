@@ -18,6 +18,11 @@ namespace Wei.Abp.AspNetCore.WebClientInfo
         }
         protected override string GetClientIpAddress()
         {
+            foreach (var item in HttpContextAccessor.HttpContext?.Request?.Headers)
+            {
+                Logger.LogInformation($"{item.Key}:{item.Value}");
+            }
+            
             StringValues? xForwardedfor = HttpContextAccessor.HttpContext?.Request?.Headers?["X-Forwarded-For"];
             string clientIpAddress = xForwardedfor.HasValue ? xForwardedfor.Value.ToString() : base.GetClientIpAddress();
             return clientIpAddress;

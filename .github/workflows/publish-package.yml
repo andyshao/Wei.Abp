@@ -23,3 +23,10 @@ jobs:
           PROJECT_FILE_PATH: src/Wei.Abp.Sms.TencentCloud/Wei.Abp.Sms.TencentCloud.csproj
           VERSION_FILE_PATH: common.props
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: publish Wei.Abp.AspNetCore
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/Wei.Abp.AspNetCore/Wei.Abp.AspNetCore.csproj
+          VERSION_FILE_PATH: common.props
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}

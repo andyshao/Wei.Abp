@@ -33,19 +33,20 @@ var configuration = context.Services.GetConfiguration();
 
 例如，您可以配置 ISmsSender 设置，如下所示：
 
-````json
+```json
 {
   "Settings": {
     "Tencent.Sms.AppId": "应用ID",
     "Tencent.Sms.SecretId": "密钥ID",
     "Tencent.Sms.SecretKey": "密钥Key",
     "Tencent.Sms.Region": "区域",
-    "Tencent.Sms.Sign": "签名",
+    "Tencent.Sms.Sign": "签名"
   }
 }
+```
 
 发送方法
+
 ```
- await _sms.SendAsync(new TencentCloudSmsMessage("+8618588688087", "广州安华磨具") { Sign = "广州安华磨具", TemplateID = "656176", TemplateParamSet = "德邦物流;20234234" });
- ```
-````
+await _sms.SendAsync(new TencentCloudSmsMessage("+8618588688087", "广州安华磨具") { Sign = "广州安华磨具", TemplateID = "656176", TemplateParamSet = "德邦物流;20234234" });
+```

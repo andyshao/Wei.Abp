@@ -30,3 +30,10 @@ jobs:
           PROJECT_FILE_PATH: src/Wei.Abp.AspNetCore/Wei.Abp.AspNetCore.csproj
           VERSION_FILE_PATH: common.props
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: publish Wei.Abp.Ocelot.Provider.ConsulClient
+        uses: brandedoutcast/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: src/Wei.Abp.Ocelot.Provider.ConsulClient/Wei.Abp.Ocelot.Provider.ConsulClient.csproj
+          VERSION_FILE_PATH: common.props
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}

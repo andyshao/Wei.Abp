@@ -26,6 +26,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.AspNetCore", "src\W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Ocelot.Provider.ConsulClient", "src\Wei.Abp.Ocelot.Provider.ConsulClient\Wei.Abp.Ocelot.Provider.ConsulClient.csproj", "{152A6FDE-924F-43D0-BC6D-B37A5CE6F2D7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{7691354C-D40D-47A9-8938-0532B1D3FF73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

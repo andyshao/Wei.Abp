@@ -1,8 +1,8 @@
 name: publish to nuget
 on:
   push:
-    branches:
-      - main # Default release branch
+    tags:
+      - "*" # 创建新TAG
 jobs:
   publish:
     name: list on nuget
@@ -10,30 +10,36 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install dotnet tool
+        run: dotnet tool install -g dotnetCampus.TagToVersion
+
+      - name: Set tag to version
+        run: dotnet TagToVersion -t ${ { github.ref } }
+
       - name: publish Wei.Abp.BlobStoring.TencentCloudCos
         uses: brandedoutcast/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: src/Wei.Abp.BlobStoring.TencentCloudCos/Wei.Abp.BlobStoring.TencentCloudCos.csproj
-          VERSION_FILE_PATH: common.props
+          # VERSION_FILE_PATH: common.props
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
       - name: publish Wei.Abp.Sms.TencentCloud
         uses: brandedoutcast/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: src/Wei.Abp.Sms.TencentCloud/Wei.Abp.Sms.TencentCloud.csproj
-          VERSION_FILE_PATH: common.props
+          # VERSION_FILE_PATH: common.props
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
       - name: publish Wei.Abp.AspNetCore
         uses: brandedoutcast/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: src/Wei.Abp.AspNetCore/Wei.Abp.AspNetCore.csproj
-          VERSION_FILE_PATH: common.props
+          # VERSION_FILE_PATH: common.props
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
 
       - name: publish Wei.Abp.Ocelot.Provider.ConsulClient
         uses: brandedoutcast/publish-nuget@v2
         with:
           PROJECT_FILE_PATH: src/Wei.Abp.Ocelot.Provider.ConsulClient/Wei.Abp.Ocelot.Provider.ConsulClient.csproj
-          VERSION_FILE_PATH: common.props
+          # VERSION_FILE_PATH: common.props
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}

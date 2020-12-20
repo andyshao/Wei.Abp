@@ -18,7 +18,7 @@ namespace Wei.Abp.BlobStoring.QCloud.Cos.Tests
         typeof(AbpBlobStoringModule),
         typeof(AbpTestBaseModule),
         typeof(AbpAutofacModule),
-        typeof(VNextBlobStoringTencentCloudCosModule)
+        typeof(BlobStoringTencentCloudCosModule)
     )]
     public class VNextBlobStoringTencentCloudCosTestModule: AbpModule
     {

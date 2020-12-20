@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>.net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Http.Client" Version="4.0.0" />
+
+    <ProjectReference Include="..\Notifications.Application.Contracts\Wei.Abp.Notifications.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Notifications.HttpApi\Wei.Abp.Notifications.HttpApi.csproj" />
+  </ItemGroup>
+
+</Project>

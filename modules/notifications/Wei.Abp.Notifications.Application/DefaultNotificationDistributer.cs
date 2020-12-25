@@ -13,6 +13,7 @@ using Volo.Abp.SettingManagement;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.MultiTenancy;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Wei.Abp.Notifications
 {
@@ -39,7 +40,7 @@ namespace Wei.Abp.Notifications
             ICurrentTenant currentTenant,
             ISettingManager settingManager,
             IServiceProvider serviceProvider,
-            ILogger logger)
+            ILoggerFactory loggerFactory)
         {
             NotificationStore = notificationStore;
             GuidGenerator = guidGenerator;
@@ -48,7 +49,7 @@ namespace Wei.Abp.Notifications
             CurrentTenant = currentTenant;
             SettingManager = settingManager;
             ServiceProvider = serviceProvider;
-            Logger = logger;
+            Logger = loggerFactory?.CreateLogger(GetType().FullName) ?? NullLogger.Instance;
             NotificationDefinitionManager = notificationDefinitionManager;
         }
 

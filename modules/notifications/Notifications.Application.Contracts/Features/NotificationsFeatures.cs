@@ -1,9 +1,12 @@
-﻿namespace Wei.Abp.Notifications.Features
+﻿namespace Wei.Abp.Notifications
 {
     public static class NotificationsFeatures
     {
         public const string Group = "Notifications";
-
+        /// <summary>
+        /// 是否开启消息通知
+        /// </summary>
+        public const string Enable = Group + ".Enable";
         /// <summary>
         /// 开启短信通知
         /// </summary>

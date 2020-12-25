@@ -17,29 +17,26 @@ namespace Wei.Abp.Notifications.Domain
     public class NotificationStore : DomainService, INotificationStore, ITransientDependency
     {
         private readonly IRepository<NotificationInfo, Guid> _notificationRepository;
-        private readonly IRepository<TenantNotificationInfo, Guid> _tenantNotificationRepository;
+        //private readonly IRepository<TenantNotificationInfo, Guid> _tenantNotificationRepository;
         private readonly IRepository<UserNotificationInfo, Guid> _userNotificationRepository;
         private readonly IRepository<NotificationSubscriptionInfo, Guid> _notificationSubscriptionRepository;
         private readonly IUnitOfWorkManager _unitOfWorkManager;
-        private readonly Volo.Abp.Data.IDataFilter _dataFilter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationStore"/> class.
         /// </summary>
         public NotificationStore(
             IRepository<NotificationInfo, Guid> notificationRepository,
-            IRepository<TenantNotificationInfo, Guid> tenantNotificationRepository,
+            //IRepository<TenantNotificationInfo, Guid> tenantNotificationRepository,
             IRepository<UserNotificationInfo, Guid> userNotificationRepository,
             IRepository<NotificationSubscriptionInfo, Guid> notificationSubscriptionRepository,
-            IUnitOfWorkManager unitOfWorkManager,
-            Volo.Abp.Data.IDataFilter dataFilter)
+            IUnitOfWorkManager unitOfWorkManager)
         {
             _notificationRepository = notificationRepository;
-            _tenantNotificationRepository = tenantNotificationRepository;
+            //_tenantNotificationRepository = tenantNotificationRepository;
             _userNotificationRepository = userNotificationRepository;
             _notificationSubscriptionRepository = notificationSubscriptionRepository;
             _unitOfWorkManager = unitOfWorkManager;
-            _dataFilter = dataFilter;
         }
 
         [UnitOfWork]
@@ -55,14 +52,12 @@ namespace Wei.Abp.Notifications.Domain
         [UnitOfWork]
         public virtual async Task DeleteSubscriptionAsync(Guid userId, string notificationName)
         {
-            //using (CurrentTenant.Change(user.TenantId))
-            //{
+    
             await _notificationSubscriptionRepository.DeleteAsync(s =>
                 s.UserId == userId &&
                 s.NotificationName == notificationName
                 );
             await _unitOfWorkManager.Current.SaveChangesAsync();
-            //}
         }
 
         [UnitOfWork]
@@ -190,41 +185,14 @@ namespace Wei.Abp.Notifications.Domain
             return predicate;
         }
 
-        //[UnitOfWork]
-        //public virtual Task<List<UserNotificationInfoWithNotificationInfo>> GetUserNotificationsWithNotificationsAsync(UserIdentifier user, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)
-        //{
-        //    using (CurrentTenant.Change(user.TenantId))
-        //    {
-        //        var query = from userNotificationInfo in _userNotificationRepository
-        //                    join tenantNotificationInfo in _tenantNotificationRepository on userNotificationInfo.NotificationId equals tenantNotificationInfo.Id
-        //                    where userNotificationInfo.UserId == user.Id
-        //                    orderby tenantNotificationInfo.CreationTime descending
-        //                    select new { userNotificationInfo, tenantNotificationInfo = tenantNotificationInfo };
+        [UnitOfWork]
+        public virtual Task<List<UserNotificationInfo>> GetUserNotificationsAsync(Guid user, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)
+        {
 
-        //        if (state.HasValue)
-        //        {
-        //            query = query.Where(x => x.userNotificationInfo.State == state.Value);
-        //        }
+            var query = _userNotificationRepository.Where(CreateNotificationFilterPredicate(user, state, startDate, endDate)).PageBy(skipCount, maxResultCount);
 
-        //        if (startDate.HasValue)
-        //        {
-        //            query = query.Where(x => x.tenantNotificationInfo.CreationTime >= startDate);
-        //        }
-
-        //        if (endDate.HasValue)
-        //        {
-        //            query = query.Where(x => x.tenantNotificationInfo.CreationTime <= endDate);
-        //        }
-
-        //        query = query.PageBy(skipCount, maxResultCount);
-
-        //        var list = query.ToList();
-
-        //        return Task.FromResult(list.Select(
-        //            a => new UserNotificationInfoWithNotificationInfo(a.userNotificationInfo, a.tenantNotificationInfo)
-        //        ).ToList());
-        //    }
-        //}
+            return AsyncExecuter.ToListAsync(query);
+        }
 
         [UnitOfWork]
         public virtual async Task<int> GetUserNotificationCountAsync(Guid userId, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)
@@ -236,30 +204,10 @@ namespace Wei.Abp.Notifications.Domain
 
 
         //[UnitOfWork]
-        //public virtual Task<UserNotificationInfoWithNotificationInfo> GetUserNotificationWithNotificationOrNullAsync(Guid? tenantId, Guid userNotificationId)
+        //public virtual async Task InsertTenantNotificationAsync(TenantNotificationInfo tenantNotificationInfo)
         //{
-        //    using (CurrentTenant.Change(tenantId))
-        //    {
-        //        var query = from userNotificationInfo in _userNotificationRepository
-        //                    join tenantNotificationInfo in _tenantNotificationRepository on userNotificationInfo.NotificationId equals tenantNotificationInfo.Id
-        //                    where userNotificationInfo.Id == userNotificationId
-        //                    select new { userNotificationInfo, tenantNotificationInfo = tenantNotificationInfo };
-
-        //        var item = query.FirstOrDefault();
-        //        if (item == null)
-        //        {
-        //            return Task.FromResult((UserNotificationInfoWithNotificationInfo)null);
-        //        }
-
-        //        return Task.FromResult(new UserNotificationInfoWithNotificationInfo(item.userNotificationInfo, item.tenantNotificationInfo));
-        //    }
+        //    await _tenantNotificationRepository.InsertAsync(tenantNotificationInfo);
         //}
-
-        [UnitOfWork]
-        public virtual async Task InsertTenantNotificationAsync(TenantNotificationInfo tenantNotificationInfo)
-        {
-            await _tenantNotificationRepository.InsertAsync(tenantNotificationInfo);
-        }
 
         public Task DeleteNotificationAsync(Guid id)
         {

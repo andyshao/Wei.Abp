@@ -11,14 +11,8 @@
     <Content Remove="Notifications.EntityFrameworkCore\appsettings.Development.json" />
     <Content Remove="Properties\launchSettings.json" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Remove="Notifications.EntityFrameworkCore\obj\Notifications.EntityFrameworkCore.csproj.nuget.g.targets" />
-    <None Remove="Notifications.EntityFrameworkCore\obj\Notifications.EntityFrameworkCore.csproj.nuget.cache" />
-    <None Remove="Notifications.EntityFrameworkCore\obj\Notifications.EntityFrameworkCore.csproj.nuget.g.props" />
-    <None Remove="Notifications.EntityFrameworkCore\obj\Debug\net5.0\Notifications.EntityFrameworkCore.MvcApplicationPartsAssemblyInfo.cache" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Wei.Abp.Notifications\Wei.Abp.Notifications.csproj" />
     <ProjectReference Include="..\Notifications.Domain\Wei.Abp.Notifications.Domain.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
@@ -32,5 +26,9 @@
     <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="4.0.0" />
     <PackageReference Include="Volo.Abp.BackgroundJobs" Version="4.0.0" />
     <PackageReference Include="Volo.Abp.AutoMapper" Version="4.0.0" />
+    <PackageReference Include="Volo.Abp.Sms" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="TenantNotificationAppService.cs" />
   </ItemGroup>
 </Project>

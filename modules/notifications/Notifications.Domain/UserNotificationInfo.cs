@@ -42,6 +42,9 @@ namespace Wei.Abp.Notifications
         public virtual UserNotificationState State { get; set; } = UserNotificationState.Unread;
 
 
-
+        public UserNotification ToUserNotification()
+        {
+            return new UserNotification();
+        }
     }
 }

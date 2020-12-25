@@ -9,7 +9,8 @@ namespace Wei.Abp.Notifications
     [DependsOn(
         typeof(AbpDddApplicationModule),
         typeof(NotificationsDomainModule),
-        typeof(NotificationsContractsApplicationModule)
+        typeof(NotificationsContractsApplicationModule),
+        typeof(Volo.Abp.Sms.AbpSmsModule)
     )]
     public class NotificationsApplicationModule : AbpModule
     {

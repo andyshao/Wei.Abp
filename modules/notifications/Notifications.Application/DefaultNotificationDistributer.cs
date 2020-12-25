@@ -7,11 +7,10 @@ using Volo.Abp.Data;
 using Volo.Abp.Domain.Services;
 using Volo.Abp.Guids;
 using Volo.Abp.Uow;
-using Volo.Abp.Users;
-using Volo.Abp.Settings;
 using Volo.Abp.SettingManagement;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.Settings;
 
 namespace Wei.Abp.Notifications
 {
@@ -20,34 +19,23 @@ namespace Wei.Abp.Notifications
     /// </summary>
     public class DefaultNotificationDistributer : DomainService, INotificationDistributer
     {
-        private readonly INotificationDefinitionManager _notificationDefinitionManager;
         private readonly INotificationStore _notificationStore;
-        private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly IGuidGenerator _guidGenerator;
-        protected IDataFilter DataFilter;
-        private NotificationOptions Options;
-        protected IRealTimeNotifier RealTime;
-        public ISettingManager SettingManager { get; set; }
+        protected NotificationOptions Options;
+        public ISettingProvider SettingProvider { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationDistributionJob"/> class.
         /// </summary>
         public DefaultNotificationDistributer(
-            IDataFilter dataFilter,
             IOptions<NotificationOptions> options,
             IRealTimeNotifier realTime,
-            INotificationDefinitionManager notificationDefinitionManager,
             INotificationStore notificationStore,
-            IUnitOfWorkManager unitOfWorkManager,
             IGuidGenerator guidGenerator)
         {
-            _notificationDefinitionManager = notificationDefinitionManager;
             _notificationStore = notificationStore;
-            _unitOfWorkManager = unitOfWorkManager;
             _guidGenerator = guidGenerator;
-            DataFilter = dataFilter;
             Options = options.Value;
-            RealTime = realTime;
         }
 
         public async Task DistributeAsync(Guid notificationId)
@@ -81,49 +69,43 @@ namespace Wei.Abp.Notifications
 
             if (!notificationInfo.UserIds.IsNullOrEmpty())
             {
-                //userIds = notificationInfo
-                //    .UserIds
-                //    .Where(async uid => bool.Parse(await SettingManager.GetOrNullForUserAsync(NotificationSettingNames.ReceiveNotifications, uid)))
-                //    .ToList();
+
                 foreach (var item in notificationInfo
                     .UserIds)
                 {
-                    if (bool.Parse(await SettingManager.GetOrNullForUserAsync(NotificationSettingNames.ReceiveNotifications, item)))
+                    var receiveNotifications= await SettingProvider.GetAsync<bool>(NotificationSettingNames.ReceiveNotifications,false);
+                    if (receiveNotifications)
                     {
                         userIds.Add(item);
                     }
                 }
             }
-            else
-            {
-                //Get subscribed users
-                List<NotificationSubscriptionInfo> subscriptions = await _notificationStore.GetSubscriptionsAsync(notificationInfo.NotificationName);
-
-                //Remove invalid subscriptions
-                var invalidSubscriptions = new Dictionary<Guid, NotificationSubscriptionInfo>();
-
-                //TODO: Group subscriptions per tenant for potential performance improvement
-                foreach (var subscription in subscriptions)
-                {
-                    using (CurrentTenant.Change(subscription.TenantId))
-                    {
-                        var tt = await SettingManager.GetOrNullAsync(NotificationSettingNames.ReceiveNotifications, subscription.TenantId?.ToString(), subscription.UserId.ToString());
-                        var ReceiveNotifications = string.IsNullOrEmpty(tt) ? false : Convert.ToBoolean(tt);
-                        if (!await _notificationDefinitionManager.IsAvailableAsync(notificationInfo.NotificationName, subscription.UserId) ||
-                            !ReceiveNotifications)
-                        {
-                            invalidSubscriptions[subscription.Id] = subscription;
-                        }
-                    }
-                }
-
-                subscriptions.RemoveAll(s => invalidSubscriptions.ContainsKey(s.Id));
-
-                //Get user ids
-                userIds = subscriptions
-                    .Select(s => s.UserId)
-                    .ToList();
-            }
+            // else
+            // {
+            //     //Get subscribed users
+            //     List<NotificationSubscriptionInfo> subscriptions = await _notificationStore.GetSubscriptionsAsync(notificationInfo.NotificationName);
+            //
+            //     //Remove invalid subscriptions
+            //     var invalidSubscriptions = new Dictionary<Guid, NotificationSubscriptionInfo>();
+            //
+            //     //TODO: Group subscriptions per tenant for potential performance improvement
+            //     foreach (var subscription in subscriptions)
+            //     {
+            //         var ReceiveNotifications = await SettingProvider.GetAsync(NotificationSettingNames.ReceiveNotifications, false);
+            //             if (!await _notificationDefinitionManager.IsAvailableAsync(notificationInfo.NotificationName, subscription.UserId) ||
+            //                 !ReceiveNotifications)
+            //             {
+            //                 invalidSubscriptions[subscription.Id] = subscription;
+            //             }
+            //     }
+            //
+            //     subscriptions.RemoveAll(s => invalidSubscriptions.ContainsKey(s.Id));
+            //
+            //     //Get user ids
+            //     userIds = subscriptions
+            //         .Select(s => s.UserId)
+            //         .ToList();
+            // }
 
 
             userIds.RemoveAll(uid => notificationInfo.ExcludedUserIds.Any(euid => euid.Equals(uid)));

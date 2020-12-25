@@ -57,11 +57,11 @@ namespace Wei.Abp.Notifications.EntityFrameworkCore
                 b.ConfigureFullAuditedAggregateRoot();
             });
 
-            builder.Entity<TenantNotificationInfo>(b =>
-            {
-                b.ToTable(options.TablePrefix + "TenantNotificationInfos", options.Schema);
-                b.ConfigureFullAuditedAggregateRoot();
-            });
+            // builder.Entity<TenantNotificationInfo>(b =>
+            // {
+            //     b.ToTable(options.TablePrefix + "TenantNotificationInfos", options.Schema);
+            //     b.ConfigureFullAuditedAggregateRoot();
+            // });
 
             builder.Entity<UserNotificationInfo>(b =>
             {

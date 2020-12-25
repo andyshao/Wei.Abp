@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Wei.Abp.Notifications\Wei.Abp.Notifications.csproj" />
+    <ProjectReference Include="..\Notifications.Domain.Shared\Wei.Abp.Notifications.Domain.Shared.csproj" />
   </ItemGroup>
 </Project>

@@ -16,26 +16,6 @@ namespace Wei.Abp.Notifications
                   L("ReceiveNotifications"), isVisibleToClients: true)
             );
         }
-        //public NotificationSettingProvider(ISettingDefinitionManager settingDefinitionManager,
-        //    ISettingEncryptionService settingEncryptionService,
-        //    ISettingValueProviderManager settingValueProviderManager)
-        //    : base(settingDefinitionManager, settingEncryptionService, settingValueProviderManager)
-        //{
-
-        //}
-
-        //public override IEnumerable<SettingDefinition> GetSettingDefinitions(SettingDefinitionProviderContext context)
-        //{
-        //    return new[]
-        //    {
-        //        new SettingDefinition(
-        //            NotificationSettingNames.ReceiveNotifications,
-        //            "true",
-        //            L("ReceiveNotifications"),
-        //            scopes: SettingScopes.User,
-        //            clientVisibilityProvider: new VisibleSettingClientVisibilityProvider())
-        //    };
-        //}
 
         private static ILocalizableString L(string name)
         {

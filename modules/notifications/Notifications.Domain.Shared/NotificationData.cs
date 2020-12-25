@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using Volo.Abp.Data;
 
 namespace Wei.Abp.Notifications
 {
@@ -10,7 +11,7 @@ namespace Wei.Abp.Notifications
     /// <see cref="https://github.com/aspnetboilerplate/aspnetboilerplate/blob/dev/src/Abp/Notifications/NotificationData.cs"/>
     /// </summary>
     [Serializable]
-    public class NotificationData
+    public class NotificationData:IHasExtraProperties
     {
         /// <summary>
         /// Gets notification data type name.
@@ -23,47 +24,16 @@ namespace Wei.Abp.Notifications
         /// </summary>
         public object this[string key]
         {
-            get { return Properties.GetValueOrDefault(key); }
-            set { Properties[key] = value; }
+            get { return this.GetProperty<object>(key); }
+            set { this.SetProperty(key,value); }
         }
-
-        /// <summary>
-        /// Can be used to add custom properties to this notification.
-        /// </summary>
-        public Dictionary<string, object> Properties
-        {
-            get { return _properties; }
-            set
-            {
-                if (value == null)
-                {
-                    throw new ArgumentNullException(nameof(value));
-                }
-
-                /* Not assign value, but add dictionary items. This is required for backward compability. */
-                foreach (var keyValue in value)
-                {
-                    if (!_properties.ContainsKey(keyValue.Key))
-                    {
-                        _properties[keyValue.Key] = keyValue.Value;
-                    }
-                }
-            }
-        }
-        private readonly Dictionary<string, object> _properties;
-
-        /// <summary>
-        /// Createa a new NotificationData object.
-        /// </summary>
-        public NotificationData()
-        {
-            _properties = new Dictionary<string, object>();
-        }
-
+        
+        
+        public  ExtraPropertyDictionary ExtraProperties { get; private set; }
+        
         public override string ToString()
         {
             return JsonSerializer.Serialize<NotificationData>(this);
-            //return this.ToJsonString();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Wei.Abp.Notifications
         /// </summary>
         /// <param name="notificationName">Name of the notification.</param>
         /// <param name="entityIdentifier">entity identifier</param>
-        Task<List<NotificationSubscription>> GetSubscriptionsAsync(string notificationName);
+        Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(string notificationName);
 
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Wei.Abp.Notifications
         /// <param name="tenantId">Tenant id. Null for the host.</param>
         /// <param name="notificationName">Name of the notification.</param>
         /// <param name="entityIdentifier">entity identifier</param>
-        Task<List<NotificationSubscription>> GetSubscriptionsAsync(Guid? tenantId, string notificationName);
+        Task<List<NotificationSubscriptionInfo>> GetSubscriptionsAsync(Guid? tenantId, string notificationName);
 
 
 
@@ -63,7 +63,7 @@ namespace Wei.Abp.Notifications
         /// Gets subscribed notifications for a user.
         /// </summary>
         /// <param name="user">User.</param>
-        Task<List<NotificationSubscription>> GetSubscribedNotificationsAsync(Guid user);
+        Task<List<NotificationSubscriptionInfo>> GetSubscribedNotificationsAsync(Guid user);
 
 
 

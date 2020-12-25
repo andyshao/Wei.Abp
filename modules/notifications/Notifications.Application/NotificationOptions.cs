@@ -5,13 +5,13 @@ namespace Wei.Abp.Notifications
 {
     public class NotificationOptions
     {
-        ///// <summary>
-        ///// 消息通知提供
-        ///// </summary>
-        public ITypeList<NotificationProvider> Providers { get; private set; }
-        ///// <summary>
-        ///// 消息分发
-        ///// </summary>
+        // /// <summary>
+        // /// 消息通知提供
+        // /// </summary>
+        // public ITypeList<NotificationProvider> Providers { get; private set; }
+        /// <summary>
+        /// 消息分发提供者
+        /// </summary>
         public ITypeList<INotificationDistributer> Distributers { get; private set; }
         /// <summary>
         /// 实时通知提供
@@ -20,8 +20,8 @@ namespace Wei.Abp.Notifications
 
         public NotificationOptions()
         {
-            //Providers = new TypeList<NotificationProvider>();
-            //Distributers = new TypeList<INotificationDistributer>();
+            // Providers = new TypeList<NotificationProvider>();
+            Distributers = new TypeList<INotificationDistributer>();
             Notifiers = new TypeList<IRealTimeNotifier>();
         }
     }

@@ -49,14 +49,12 @@ namespace Wei.Abp.Notifications.Domain
         [UnitOfWork]
         public virtual async Task DeleteSubscriptionAsync(Guid userId, string notificationName)
         {
-            //using (CurrentTenant.Change(user.TenantId))
-            //{
+    
             await _notificationSubscriptionRepository.DeleteAsync(s =>
                 s.UserId == userId &&
                 s.NotificationName == notificationName
                 );
             await _unitOfWorkManager.Current.SaveChangesAsync();
-            //}
         }
 
         [UnitOfWork]
@@ -184,41 +182,14 @@ namespace Wei.Abp.Notifications.Domain
             return predicate;
         }
 
-        //[UnitOfWork]
-        //public virtual Task<List<UserNotificationInfoWithNotificationInfo>> GetUserNotificationsWithNotificationsAsync(UserIdentifier user, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)
-        //{
-        //    using (CurrentTenant.Change(user.TenantId))
-        //    {
-        //        var query = from userNotificationInfo in _userNotificationRepository
-        //                    join tenantNotificationInfo in _tenantNotificationRepository on userNotificationInfo.NotificationId equals tenantNotificationInfo.Id
-        //                    where userNotificationInfo.UserId == user.Id
-        //                    orderby tenantNotificationInfo.CreationTime descending
-        //                    select new { userNotificationInfo, tenantNotificationInfo = tenantNotificationInfo };
+        [UnitOfWork]
+        public virtual Task<List<UserNotification>> GetUserNotificationsAsync(Guid user, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)
+        {
 
-        //        if (state.HasValue)
-        //        {
-        //            query = query.Where(x => x.userNotificationInfo.State == state.Value);
-        //        }
+            var query = _userNotificationRepository.Where(CreateNotificationFilterPredicate(user, state, startDate, endDate)).PageBy(skipCount, maxResultCount);
 
-        //        if (startDate.HasValue)
-        //        {
-        //            query = query.Where(x => x.tenantNotificationInfo.CreationTime >= startDate);
-        //        }
-
-        //        if (endDate.HasValue)
-        //        {
-        //            query = query.Where(x => x.tenantNotificationInfo.CreationTime <= endDate);
-        //        }
-
-        //        query = query.PageBy(skipCount, maxResultCount);
-
-        //        var list = query.ToList();
-
-        //        return Task.FromResult(list.Select(
-        //            a => new UserNotificationInfoWithNotificationInfo(a.userNotificationInfo, a.tenantNotificationInfo)
-        //        ).ToList());
-        //    }
-        //}
+            return AsyncExecuter.ToListAsync(query);
+        }
 
         [UnitOfWork]
         public virtual async Task<int> GetUserNotificationCountAsync(Guid userId, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)

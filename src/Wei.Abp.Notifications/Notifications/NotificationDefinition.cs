@@ -12,8 +12,23 @@ namespace Wei.Abp.Notifications
     /// <summary>
     /// Definition for a notification.
     /// </summary>
-    public class NotificationDefinition:Volo.Abp.Data.IHasExtraProperties
+    public class NotificationDefinition: IHasExtraProperties
     {
+        public NotificationDefinition(string name, 
+            ILocalizableString displayName,
+            ILocalizableString description,
+            string permission=null,
+            List<string> featureNames=null,
+            bool featuresRequiresAll=false)
+        {
+            Name = name;
+            DisplayName = displayName;
+            Description = description;
+            Permission = permission;
+            FeatureNames = featureNames;
+            FeaturesRequiresAll = featuresRequiresAll;
+        }
+
         /// <summary>
         /// Unique name of the notification.
         /// </summary>
@@ -24,28 +39,28 @@ namespace Wei.Abp.Notifications
         /// Optional.
         /// </summary>
         [NotNull]
-        public ILocalizableString DisplayName { get; set; }
+        public ILocalizableString DisplayName { get; private set; }
 
         /// <summary>
         /// Description for the notification.
         /// Optional.
         /// </summary>
-        public ILocalizableString Description { get; set; }
+        public ILocalizableString Description { get; private set; }
 
         /// <summary>
         /// 权限依赖关系。如果满足此关系，则用户可以使用此通知。
         /// 可选的
         /// </summary>
-        public string Permission { get; set; }
+        public string Permission { get; private set; }
         /// <summary>
         /// 功能依赖。如果租户启用此功能，则租户可以使用此通知。
         /// 可选的.
         /// </summary>
-        public List<string> FeatureNames { get; set; }
+        public List<string> FeatureNames { get; private set; }
         /// <summary>
         /// 功能全部满足或者满足一个
         /// </summary>
-        public bool FeaturesRequiresAll { get; set; } = false;
+        public bool FeaturesRequiresAll { get; private set; } = false;
 
 
         public ExtraPropertyDictionary ExtraProperties { get; set; }

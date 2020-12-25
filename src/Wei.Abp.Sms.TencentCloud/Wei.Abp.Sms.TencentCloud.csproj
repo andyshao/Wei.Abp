@@ -5,7 +5,7 @@
     <RootNamespace>Wei</RootNamespace>
   </PropertyGroup>
   
-  <Import Project="..\..\common.props" />
+  <Import Project="..\..\..\common.props" />
   
   <ItemGroup>
     <PackageReference Include="TencentCloudSDK" Version="3.0.97" />

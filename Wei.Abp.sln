@@ -29,15 +29,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "notifications", "notifications", "{5CCF88FE-5585-4618-B2B0-6FAE2AA4D544}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{33F5249D-0C3C-408D-B56B-74E1B686C725}"
-	ProjectSection(SolutionItems) = preProject
-		modules\notifications\Notifications.Application\Notification-System.md = modules\notifications\Notifications.Application\Notification-System.md
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Notifications.HttpApi.Client", "modules\notifications\Wei.Abp.Notifications.HttpApi.Client\Wei.Abp.Notifications.HttpApi.Client.csproj", "{F81709F4-A887-4A41-9762-7F47ADB45613}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wei.Abp.Notifications", "src\Wei.Abp.Notifications\Wei.Abp.Notifications.csproj", "{A8F578B2-D1B1-4CFB-9D4C-6A05788DFD8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Notifications", "src\Wei.Abp.Notifications\Wei.Abp.Notifications.csproj", "{A8F578B2-D1B1-4CFB-9D4C-6A05788DFD8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wei.Abp.Notifications.Test", "test\Wei.Abp.Notifications.Test\Wei.Abp.Notifications.Test.csproj", "{1CFCE011-8316-4459-82CA-A38B7CBF45FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Notifications.Test", "test\Wei.Abp.Notifications.Test\Wei.Abp.Notifications.Test.csproj", "{1CFCE011-8316-4459-82CA-A38B7CBF45FD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Notifications.Application", "modules\notifications\Wei.Abp.Notifications.Application\Wei.Abp.Notifications.Application.csproj", "{0B2E9BF0-4907-4772-8F91-79E36C5687DB}"
 EndProject

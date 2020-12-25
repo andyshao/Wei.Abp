@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,20 +7,24 @@ using System.Threading.Tasks;
 using Volo.Abp.Data;
 using Wei.Abp.Notifications;
 
-namespace Notifications.Dto
+namespace Wei.Abp.Notifications
 {
-    public record PublishNotificationInput:Volo.Abp.Data.IHasExtraProperties
+    public record PublishNotificationInput: IHasExtraProperties
     {
-        public PublishNotificationInput()
+
+        public PublishNotificationInput([NotNull] string notificationName, string message=null, NotificationSeverity severity=NotificationSeverity.Info, List<Guid> userIds=null, List<Guid> excludedUserIds=null)
         {
-            UserIds = new List<Guid>();
-            ExcludedUserIds = new List<Guid>();
+            NotificationName = notificationName;
+            Message = message;
+            Severity = severity;
+            ExcludedUserIds = excludedUserIds == null ? new List<Guid>() : excludedUserIds; ;
+            UserIds = userIds == null ? new List<Guid>() : userIds;
         }
+
         /// <summary>
         /// 订阅消息的名称
         /// </summary>
-        [System.ComponentModel.DataAnnotations.Required]
-        public string notificationName { get; set; }
+        public string NotificationName { get; set; }
         /// <summary>
         /// 消息内容
         /// </summary>

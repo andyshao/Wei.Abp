@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.ObjectMapping;
 using Volo.Abp.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Notifications;
 using Volo.Abp.MultiTenancy;
 
 namespace Wei.Abp.Notifications

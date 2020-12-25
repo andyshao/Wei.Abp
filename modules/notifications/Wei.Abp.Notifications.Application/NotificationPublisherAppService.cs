@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Notifications.Dto;
 using Volo.Abp.Application.Services;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
@@ -45,7 +44,7 @@ namespace Wei.Abp.Notifications
         [UnitOfWork]
         public virtual async Task PublishAsync(PublishNotificationInput input)
         {
-            if (input.notificationName.IsNullOrEmpty())
+            if (input.NotificationName.IsNullOrEmpty())
             {
                 throw new ArgumentException("NotificationName can not be null or whitespace!", "notificationName");
             }

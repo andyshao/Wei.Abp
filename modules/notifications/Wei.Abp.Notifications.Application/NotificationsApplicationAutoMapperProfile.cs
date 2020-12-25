@@ -1,6 +1,5 @@
 ﻿using System;
 using AutoMapper;
-using Notifications.Dto;
 using Wei.Abp.Notifications.Dto;
 
 namespace Wei.Abp.Notifications

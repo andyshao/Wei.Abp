@@ -17,7 +17,7 @@ jobs:
         run: dotnet TagToVersion -t ${{ github.ref }}
 
       - name: dotnet build
-        run: dotnet build -c Release -p:PackageVersion
+        run: dotnet build -c Release
 
       - name: dotnet pack
         run: dotnet pack -c Release --no-build -o dest

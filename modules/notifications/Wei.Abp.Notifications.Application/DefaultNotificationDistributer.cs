@@ -19,7 +19,7 @@ namespace Wei.Abp.Notifications
     /// <summary>
     /// Used to distribute notifications to users.
     /// </summary>
-    public class DefaultNotificationDistributer :  INotificationDistributer
+    public class DefaultNotificationDistributer :  INotificationDistributer,Volo.Abp.DependencyInjection.ITransientDependency
     {
         protected INotificationStore NotificationStore;
         protected IGuidGenerator GuidGenerator;

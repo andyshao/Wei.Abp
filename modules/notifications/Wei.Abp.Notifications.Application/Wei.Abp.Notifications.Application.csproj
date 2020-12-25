@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Wei.Abp.Notifications</RootNamespace>
+    <AssemblyName>Wei.Abp.Notifications.Application</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="TenantNotificationAppService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Notifications.Domain.Shared\appsettings.Development.json" />
+    <Content Remove="Notifications.EntityFrameworkCore\appsettings.Development.json" />
+    <Content Remove="Properties\launchSettings.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Notifications.EntityFrameworkCore\obj\Notifications.EntityFrameworkCore.csproj.nuget.g.targets" />
+    <None Remove="Notifications.EntityFrameworkCore\obj\Notifications.EntityFrameworkCore.csproj.nuget.cache" />
+    <None Remove="Notifications.EntityFrameworkCore\obj\Notifications.EntityFrameworkCore.csproj.nuget.g.props" />
+    <None Remove="Notifications.EntityFrameworkCore\obj\Debug\net5.0\Notifications.EntityFrameworkCore.MvcApplicationPartsAssemblyInfo.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="4.0.0" />
+    <PackageReference Include="Volo.Abp.Settings" Version="4.0.0" />
+    <PackageReference Include="Volo.Abp.SettingManagement.Domain" Version="4.0.0" />
+    <PackageReference Include="Volo.Abp.BackgroundJobs" Version="4.0.0" />
+    <PackageReference Include="Volo.Abp.AutoMapper" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Wei.Abp.Notifications.Application.Contracts\Wei.Abp.Notifications.Application.Contracts.csproj" />
+    <ProjectReference Include="..\Wei.Abp.Notifications.Domain\Wei.Abp.Notifications.Domain.csproj" />
+  </ItemGroup>
+</Project>

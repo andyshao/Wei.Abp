@@ -2,13 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>.net5.0</TargetFramework>
+    <RootNamespace>Wei.Abp.Notifications</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Http.Client" Version="4.0.0" />
+  </ItemGroup>
 
-    <ProjectReference Include="..\Notifications.Application.Contracts\Wei.Abp.Notifications.Application.Contracts.csproj" />
-    <ProjectReference Include="..\Notifications.HttpApi\Wei.Abp.Notifications.HttpApi.csproj" />
+  <ItemGroup>
+    <ProjectReference Include="..\Wei.Abp.Notifications.Application.Contracts\Wei.Abp.Notifications.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

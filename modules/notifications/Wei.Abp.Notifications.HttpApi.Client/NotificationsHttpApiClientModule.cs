@@ -4,12 +4,11 @@ using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Http.Client;
 using Volo.Abp.Modularity;
-using Wei.Abp.Notifications;
 
-namespace PriceManagement {
+namespace Wei.Abp.Notifications
+{
     [DependsOn(
         typeof(NotificationsContractsApplicationModule),
-        typeof(NotificationsHttpApiModule),
         typeof(AbpHttpClientModule)
     )]
     public class NotificationsHttpApiClientModule : AbpModule

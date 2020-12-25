@@ -23,6 +23,7 @@ namespace Wei.Abp.Notifications
             Configure<NotificationOptions>(options =>
             {
                 options.Distributers.Add<DefaultNotificationDistributer>();
+                options.Notifiers.Add<SmsRealTimeNotifier>();
             });
         }
     }

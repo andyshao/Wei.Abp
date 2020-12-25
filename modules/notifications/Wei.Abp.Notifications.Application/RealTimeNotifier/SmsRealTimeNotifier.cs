@@ -8,12 +8,12 @@ namespace Wei.Abp.Notifications
     /// <summary>
     /// 短信发送
     /// </summary>
-    public class SmsNotificationDistributer : IRealTimeNotifier, Volo.Abp.DependencyInjection.ITransientDependency
+    public class SmsRealTimeNotifier : IRealTimeNotifier, Volo.Abp.DependencyInjection.ITransientDependency
     {
         protected ISmsSender smsSender;
         protected IExternalUserLookupServiceProvider UserLookupServiceProvider;
 
-        public SmsNotificationDistributer(ISmsSender smsSender, IExternalUserLookupServiceProvider userLookupServiceProvider)
+        public SmsRealTimeNotifier(ISmsSender smsSender, IExternalUserLookupServiceProvider userLookupServiceProvider)
         {
             this.smsSender = smsSender;
             UserLookupServiceProvider = userLookupServiceProvider;

@@ -16,30 +16,27 @@ jobs:
       - name: Set tag to version
         run: dotnet TagToVersion -t ${ { github.ref } }
 
-      - name: publish Wei.Abp.BlobStoring.TencentCloudCos
-        uses: brandedoutcast/publish-nuget@v2
-        with:
-          PROJECT_FILE_PATH: src/Wei.Abp.BlobStoring.TencentCloudCos/Wei.Abp.BlobStoring.TencentCloudCos.csproj
-          # VERSION_FILE_PATH: common.props
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: dotnet build
+        run: dotnet build -c Release
 
-      - name: publish Wei.Abp.Sms.TencentCloud
-        uses: brandedoutcast/publish-nuget@v2
-        with:
-          PROJECT_FILE_PATH: src/Wei.Abp.Sms.TencentCloud/Wei.Abp.Sms.TencentCloud.csproj
-          # VERSION_FILE_PATH: common.props
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: dotnet pack
+        run: dotnet pack -c Release --no-build -o dest
 
-      - name: publish Wei.Abp.AspNetCore
-        uses: brandedoutcast/publish-nuget@v2
-        with:
-          PROJECT_FILE_PATH: src/Wei.Abp.AspNetCore/Wei.Abp.AspNetCore.csproj
-          # VERSION_FILE_PATH: common.props
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      - name: remove unused packages
+        run: |
+          cd dest
+          del *.HttpApi.Client.ConsoleTestApp*
+          del *.Host.Shared*
+          del *.Tests*
+          dir -name
 
-      - name: publish Wei.Abp.Ocelot.Provider.ConsulClient
-        uses: brandedoutcast/publish-nuget@v2
-        with:
-          PROJECT_FILE_PATH: src/Wei.Abp.Ocelot.Provider.ConsulClient/Wei.Abp.Ocelot.Provider.ConsulClient.csproj
-          # VERSION_FILE_PATH: common.props
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+      # - name: dotnet nuget push to GitHub
+      #   uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
+      #   with:
+      #     nupkg-path: 'dest\*.nupkg'
+      #     repo-owner: "刘志伟"
+      #     gh-user: "刘志伟"
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: dotnet nuget push to NuGet
+        run: dotnet nuget push dest\*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate

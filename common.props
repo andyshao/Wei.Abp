@@ -1,4 +1,6 @@
 <Project>
+  <Import Project="build\Version.props" />
+
   <PropertyGroup>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -7,6 +9,7 @@
     <PackageTags>刘志伟的abp vnext的扩展 </PackageTags>
     <Company>刘志伟</Company>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageVersion>$(PackageVersion)</PackageVersion>
     <PackageProjectUrl>https://github.com/thk-liu/Wei.Abp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thk-liu/Wei.Abp</RepositoryUrl>
   </PropertyGroup>

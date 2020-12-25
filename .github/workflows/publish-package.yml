@@ -14,7 +14,7 @@ jobs:
         run: dotnet tool install -g dotnetCampus.TagToVersion
 
       - name: Set tag to version
-        run: dotnet TagToVersion -t ${ { github.ref } }
+        run: dotnet TagToVersion -t ${{ github.ref }}
 
       - name: dotnet build
         run: dotnet build -c Release

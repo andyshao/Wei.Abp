@@ -5,6 +5,7 @@ using Volo.Abp.ObjectMapping;
 using Volo.Abp.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Volo.Abp.MultiTenancy;
+using Volo.Abp.Uow;
 
 namespace Wei.Abp.Notifications
 {
@@ -24,7 +25,7 @@ namespace Wei.Abp.Notifications
             ServiceProvider = serviceProvider;
         }
 
-
+        [UnitOfWork]
         public override void Execute(NotificationDistributionJobArgs args)
         {
             foreach (var notificationDistributorType in Options.Distributers)

@@ -34,15 +34,16 @@ namespace Wei.Abp.Notifications
         public DefaultNotificationDistributer(INotificationStore notificationStore,
             INotificationDefinitionManager notificationDefinitionManager,
             IGuidGenerator guidGenerator,
-            NotificationOptions options,
+            IOptions<NotificationOptions> options,
             IRealTimeNotifier realTime,
             ICurrentTenant currentTenant,
             ISettingManager settingManager,
-            IServiceProvider serviceProvider, ILogger logger)
+            IServiceProvider serviceProvider,
+            ILogger logger)
         {
             NotificationStore = notificationStore;
             GuidGenerator = guidGenerator;
-            Options = options;
+            Options = options.Value;
             RealTime = realTime;
             CurrentTenant = currentTenant;
             SettingManager = settingManager;

@@ -39,6 +39,29 @@ namespace Wei.Abp.Notifications
         }
 
         /// <summary>
+        /// 发布消息至订阅用户
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task PublishSubscriptionsAsync(PublishNotificationInput input)
+        {
+            if (input.NotificationName.IsNullOrEmpty())
+            {
+                throw new ArgumentException("NotificationName can not be null or whitespace!", "notificationName");
+            }
+            var subscriptions = await _store.GetSubscriptionsAsync(input.NotificationName);
+            // 发送给订阅用户 排除不接收的用户
+            if (input.UserIds.Count <= 0)
+            {
+                var userIds = input.ExcludedUserIds.Count <= 0 ? subscriptions.Select(c => c.UserId).ToArray() :
+                    subscriptions.Where(c => !input.ExcludedUserIds.Any(d => d == c.UserId)).Select(c => c.UserId).ToArray();
+                input.UserIds.AddRange(userIds);
+            }
+            await PublishAsync(input);
+        }
+
+
+        /// <summary>
         /// 发布用户消息
         ///  <summary>
         [UnitOfWork]
@@ -54,20 +77,24 @@ namespace Wei.Abp.Notifications
 
             var subscriptions = await _store.GetSubscriptionsAsync(notification.NotificationName);
 
-            //检查是否启用通知与用户是否订阅
+            //检查是否启用通知
             if (notification.UserIds.Count > 0)
             {
                 var userIds = notification.ExcludedUserIds.Count <= 0 ? subscriptions.Select(c => c.UserId).ToArray() :
                     subscriptions.Where(c => !notification.ExcludedUserIds.Any(d => d == c.UserId)).Select(c => c.UserId).ToArray();
                 notification.UserIds.AddRange(userIds);
             }
-            // 发送给订阅用户 排除不接收的用户
-            if (notification.UserIds.Count <= 0)
+            else if(CurrentUser.Id.HasValue)
             {
-                var userIds = notification.ExcludedUserIds.Count <= 0 ? subscriptions.Select(c => c.UserId).ToArray() :
-                    subscriptions.Where(c => !notification.ExcludedUserIds.Any(d => d == c.UserId)).Select(c => c.UserId).ToArray();
-                notification.UserIds.AddRange(userIds);
+                notification.UserIds.Add(CurrentUser.Id.Value);
             }
+            //// 发送给订阅用户 排除不接收的用户
+            //if (notification.UserIds.Count <= 0)
+            //{
+            //    var userIds = notification.ExcludedUserIds.Count <= 0 ? subscriptions.Select(c => c.UserId).ToArray() :
+            //        subscriptions.Where(c => !notification.ExcludedUserIds.Any(d => d == c.UserId)).Select(c => c.UserId).ToArray();
+            //    notification.UserIds.AddRange(userIds);
+            //}
 
             await _store.InsertNotificationAsync(notification);
             await CurrentUnitOfWork.SaveChangesAsync(); //To get Id of the notification

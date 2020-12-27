@@ -12,7 +12,7 @@ namespace Wei.Abp.Notifications
         {
             var group = context.AddGroup(NotificationsFeatures.Group, L("通知"));
 
-            group.AddFeature(NotificationsFeatures.EnableForSMS,
+            group.AddFeature(NotificationsFeatures.Enable,
                 defaultValue: "true",
                 displayName: L("消息通知"),
                 description: L("启用后将接受并存储所有的消息通知"),

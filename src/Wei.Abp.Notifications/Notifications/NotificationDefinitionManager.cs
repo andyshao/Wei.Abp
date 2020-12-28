@@ -16,7 +16,7 @@ namespace Wei.Abp.Notifications
 {
     public class NotificationDefinitionManager : INotificationDefinitionManager, ISingletonDependency
     {
-        protected Lazy<IDictionary<string, NotificationDefinition>> SettingDefinitions { get; }
+        protected Lazy<IDictionary<string, NotificationDefinition>> NotificationDefinitions { get; }
 
         protected NotificationOptions Options { get; }
 
@@ -36,7 +36,7 @@ namespace Wei.Abp.Notifications
             Options = options.Value;
             FeatureChecker = featureChecker;
             AuthorizationService = authorizationService;
-            SettingDefinitions = new Lazy<IDictionary<string, NotificationDefinition>>(CreateNotificationDefinitions, true);
+            NotificationDefinitions = new Lazy<IDictionary<string, NotificationDefinition>>(CreateNotificationDefinitions, true);
         }
 
         public virtual NotificationDefinition Get(string name)
@@ -47,7 +47,7 @@ namespace Wei.Abp.Notifications
 
             if (setting == null)
             {
-                throw new AbpException("Undefined setting: " + name);
+                throw new AbpException("Undefined notification: " + name);
             }
 
             return setting;
@@ -55,12 +55,12 @@ namespace Wei.Abp.Notifications
 
         public virtual IReadOnlyList<NotificationDefinition> GetAll()
         {
-            return SettingDefinitions.Value.Values.ToImmutableList();
+            return NotificationDefinitions.Value.Values.ToImmutableList();
         }
 
         public virtual NotificationDefinition GetOrNull(string name)
         {
-            return SettingDefinitions.Value.GetOrDefault(name);
+            return NotificationDefinitions.Value.GetOrDefault(name);
         }
 
         protected virtual IDictionary<string, NotificationDefinition> CreateNotificationDefinitions()

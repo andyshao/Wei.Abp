@@ -36,17 +36,11 @@ namespace Wei.Abp.Notifications.Domain
             _unitOfWorkManager = unitOfWorkManager;
         }
 
-        [UnitOfWork]
-        public virtual async Task InsertSubscriptionAsync(NotificationSubscription subscription)
+        public virtual Task InsertSubscriptionAsync(NotificationSubscription subscription)
         {
-            using (CurrentTenant.Change(subscription.TenantId))
-            {
-                await _notificationSubscriptionRepository.InsertAsync(subscription);
-                await _unitOfWorkManager.Current.SaveChangesAsync();
-            }
+            return _notificationSubscriptionRepository.InsertAsync(subscription);
         }
 
-        [UnitOfWork]
         public virtual async Task DeleteSubscriptionAsync(Guid userId, string notificationName)
         {
     
@@ -54,108 +48,82 @@ namespace Wei.Abp.Notifications.Domain
                 s.UserId == userId &&
                 s.NotificationName == notificationName
                 );
-            await _unitOfWorkManager.Current.SaveChangesAsync();
         }
 
-        [UnitOfWork]
-        public virtual async Task InsertNotificationAsync(Notification notification)
+        public virtual Task InsertNotificationAsync(Notification notification)
         {
-            using (CurrentTenant.Change(null))
-            {
-                await _notificationRepository.InsertAsync(notification);
-                await _unitOfWorkManager.Current.SaveChangesAsync();
-            }
+              return  _notificationRepository.InsertAsync(notification);
         }
 
 
-        [UnitOfWork]
-        public virtual async Task<Notification> GetNotificationOrNullAsync(Guid notificationId)
+        public virtual Task<Notification> GetNotificationOrNullAsync(Guid notificationId)
         {
-            using (CurrentTenant.Change(null))
-            {
-                return await _notificationRepository.Where(c => c.Id == notificationId).FirstOrDefaultAsync();
-            }
+
+            return  _notificationRepository.GetAsync(notificationId); ;
         }
 
 
-        [UnitOfWork]
         public virtual async Task InsertUserNotificationAsync(UserNotification userNotification)
         {
-            using (CurrentTenant.Change(userNotification.TenantId))
-            {
-                await _userNotificationRepository.InsertAsync(userNotification);
-                await _unitOfWorkManager.Current.SaveChangesAsync();
-            }
+                await  _userNotificationRepository.InsertAsync(userNotification);
         }
 
-        [UnitOfWork]
         public virtual Task<List<NotificationSubscription>> GetSubscriptionsAsync(string notificationName)
         {
-            //using (_dataFilter.Disable<Volo.Abp.MultiTenancy.IMultiTenant>())
-            //{
-            return _notificationSubscriptionRepository.Where(s => s.NotificationName == notificationName).ToListAsync();
-            //}
+            return AsyncExecuter.ToListAsync(_notificationSubscriptionRepository.Where(s => s.NotificationName == notificationName));
         }
 
-        [UnitOfWork]
-        public virtual async Task<List<NotificationSubscription>> GetSubscriptionsAsync(Guid userId)
+        public virtual Task<List<NotificationSubscription>> GetSubscriptionsAsync(Guid userId)
         {
-            return await _notificationSubscriptionRepository.Where(s => s.UserId == userId).ToListAsync();
+            return AsyncExecuter.ToListAsync(_notificationSubscriptionRepository.Where(s => s.UserId == userId));
         }
 
 
-        [UnitOfWork]
         public virtual async Task<bool> IsSubscribedAsync(Guid userId, string notificationName)
         {
-            return await _notificationSubscriptionRepository.CountAsync(s =>
+            return await AsyncExecuter.CountAsync(_notificationSubscriptionRepository.Where(s =>
                 s.UserId == userId &&
                 s.NotificationName == notificationName
-                ) > 0;
+                )) > 0;
         }
 
-        [UnitOfWork]
         public virtual async Task UpdateUserNotificationStateAsync(Guid userNotificationId, UserNotificationState state)
         {
-            var userNotification = await _userNotificationRepository.Where(c => c.UserId == userNotificationId).FirstOrDefaultAsync();
+            var userNotification = await AsyncExecuter.FirstOrDefaultAsync(_userNotificationRepository.Where(c => c.UserId == userNotificationId));
             if (userNotification == null)
             {
                 return;
             }
 
             userNotification.State = state;
-            await _unitOfWorkManager.Current.SaveChangesAsync();
+            await _userNotificationRepository.UpdateAsync(userNotification);
         }
 
-        [UnitOfWork]
         public virtual async Task UpdateAllUserNotificationStatesAsync(Guid userId, UserNotificationState state)
         {
-            var userNotifications = await _userNotificationRepository.Where(un => un.UserId == userId).ToListAsync();
+            var userNotifications = await AsyncExecuter.ToListAsync(_userNotificationRepository.Where(un => un.UserId == userId));
 
             foreach (var userNotification in userNotifications)
             {
                 userNotification.State = state;
+                await _userNotificationRepository.UpdateAsync(userNotification);
             }
-
-            await _unitOfWorkManager.Current.SaveChangesAsync();
         }
 
 
-        [UnitOfWork]
-        public virtual async Task DeleteUserNotificationAsync(Guid userNotificationId)
+        public virtual Task DeleteUserNotificationAsync(Guid userNotificationId)
         {
 
-            await _userNotificationRepository.DeleteAsync(userNotificationId);
-            await _unitOfWorkManager.Current.SaveChangesAsync();
+            return _userNotificationRepository.DeleteAsync(userNotificationId);
         }
 
         [UnitOfWork]
-        public virtual async Task DeleteAllUserNotificationsAsync(Guid userId, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)
+        public virtual Task DeleteAllUserNotificationsAsync(Guid userId, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)
         {
 
             var predicate = CreateNotificationFilterPredicate(userId, state, startDate, endDate);
 
-            await _userNotificationRepository.DeleteAsync(predicate);
-            await _unitOfWorkManager.Current.SaveChangesAsync();
+            return _userNotificationRepository.DeleteAsync(predicate);
         }
 
 
@@ -182,7 +150,6 @@ namespace Wei.Abp.Notifications.Domain
             return predicate;
         }
 
-        [UnitOfWork]
         public virtual Task<List<UserNotification>> GetUserNotificationsAsync(Guid user, UserNotificationState? state = null, int skipCount = 0, int maxResultCount = int.MaxValue, DateTime? startDate = null, DateTime? endDate = null)
         {
 
@@ -191,7 +158,6 @@ namespace Wei.Abp.Notifications.Domain
             return AsyncExecuter.ToListAsync(query);
         }
 
-        [UnitOfWork]
         public virtual async Task<int> GetUserNotificationCountAsync(Guid userId, UserNotificationState? state = null, DateTime? startDate = null, DateTime? endDate = null)
         {
 

@@ -104,7 +104,7 @@ namespace Wei.Abp.Notifications
             {
                 var userNotification = new UserNotification()
                 {
-                    TenantId = CurrentTenant.Id,
+                    TenantId = notificationInfo.TenantId,
                     UserId = user,
                     NotificationId = notificationInfo.Id
                 };

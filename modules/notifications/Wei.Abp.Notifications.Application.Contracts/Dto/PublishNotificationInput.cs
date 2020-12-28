@@ -11,9 +11,14 @@ namespace Wei.Abp.Notifications
 {
     public record PublishNotificationInput: IHasExtraProperties
     {
-
-        public PublishNotificationInput([NotNull] string notificationName, string message=null, NotificationSeverity severity=NotificationSeverity.Info, List<Guid> userIds=null, List<Guid> excludedUserIds=null)
+        public PublishNotificationInput()
         {
+            ExtraProperties = new ExtraPropertyDictionary();
+        }
+        public PublishNotificationInput([NotNull] string notificationName, string message=null, NotificationSeverity severity=NotificationSeverity.Info, List<Guid> userIds=null, List<Guid> excludedUserIds=null)
+            :this()
+        {
+            
             NotificationName = notificationName;
             Message = message;
             Severity = severity;

@@ -9,21 +9,21 @@ namespace Wei.Abp.Notifications
 {
     public class NotificationDefinitionContext: INotificationDefinitionContext
     {
-        protected Dictionary<string, NotificationDefinition> Settings { get; }
+        protected Dictionary<string, NotificationDefinition> Notifications { get; }
 
-        public NotificationDefinitionContext(Dictionary<string, NotificationDefinition> settings)
+        public NotificationDefinitionContext(Dictionary<string, NotificationDefinition> notifications)
         {
-            Settings = settings;
+            Notifications = notifications;
         }
 
         public virtual NotificationDefinition GetOrNull(string name)
         {
-            return Settings.GetOrDefault(name);
+            return Notifications.GetOrDefault(name);
         }
 
         public virtual IReadOnlyList<NotificationDefinition> GetAll()
         {
-            return Settings.Values.ToImmutableList();
+            return Notifications.Values.ToImmutableList();
         }
 
         public virtual void Add(params NotificationDefinition[] definitions)
@@ -35,7 +35,7 @@ namespace Wei.Abp.Notifications
 
             foreach (var definition in definitions)
             {
-                Settings[definition.Name] = definition;
+                Notifications[definition.Name] = definition;
             }
         }
     }

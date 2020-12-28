@@ -46,6 +46,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Notifications.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Notifications.Application.Contracts", "modules\notifications\Wei.Abp.Notifications.Application.Contracts\Wei.Abp.Notifications.Application.Contracts.csproj", "{D649F9CB-BE87-4D20-89F3-14BD6247F9CB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Notification.RealTimeNotifier.Email", "modules\notifications\Wei.Abp.Notification.RealTimeNotifier.Email\Wei.Abp.Notification.RealTimeNotifier.Email.csproj", "{CF7724B6-BA10-4557-856A-85CCF5C71754}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wei.Abp.Notification.RealTimeNotifier.Sms", "modules\notifications\Wei.Abp.Notification.RealTimeNotifier.Sms\Wei.Abp.Notification.RealTimeNotifier.Sms.csproj", "{5A83777E-97AD-4247-BA88-E8F6A7D1FA2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wei.Abp.Notification.RealTimeNotifier.SignalR", "modules\notifications\Wei.Abp.Notification.RealTimeNotifier.SignalR\Wei.Abp.Notification.RealTimeNotifier.SignalR.csproj", "{6B3C2D52-999E-4E2E-A11F-4E63C08A4E00}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +114,18 @@ Global
 		{D649F9CB-BE87-4D20-89F3-14BD6247F9CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D649F9CB-BE87-4D20-89F3-14BD6247F9CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D649F9CB-BE87-4D20-89F3-14BD6247F9CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF7724B6-BA10-4557-856A-85CCF5C71754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF7724B6-BA10-4557-856A-85CCF5C71754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF7724B6-BA10-4557-856A-85CCF5C71754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF7724B6-BA10-4557-856A-85CCF5C71754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A83777E-97AD-4247-BA88-E8F6A7D1FA2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A83777E-97AD-4247-BA88-E8F6A7D1FA2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A83777E-97AD-4247-BA88-E8F6A7D1FA2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A83777E-97AD-4247-BA88-E8F6A7D1FA2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B3C2D52-999E-4E2E-A11F-4E63C08A4E00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B3C2D52-999E-4E2E-A11F-4E63C08A4E00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B3C2D52-999E-4E2E-A11F-4E63C08A4E00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B3C2D52-999E-4E2E-A11F-4E63C08A4E00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,6 +147,9 @@ Global
 		{06208C65-9B71-42C6-A2DC-019015990A51} = {33F5249D-0C3C-408D-B56B-74E1B686C725}
 		{E564C63B-741D-495F-BB75-1C8712C873B4} = {33F5249D-0C3C-408D-B56B-74E1B686C725}
 		{D649F9CB-BE87-4D20-89F3-14BD6247F9CB} = {33F5249D-0C3C-408D-B56B-74E1B686C725}
+		{CF7724B6-BA10-4557-856A-85CCF5C71754} = {33F5249D-0C3C-408D-B56B-74E1B686C725}
+		{5A83777E-97AD-4247-BA88-E8F6A7D1FA2F} = {33F5249D-0C3C-408D-B56B-74E1B686C725}
+		{6B3C2D52-999E-4E2E-A11F-4E63C08A4E00} = {33F5249D-0C3C-408D-B56B-74E1B686C725}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5B1BCCC3-8E74-4B30-98EF-A2FBC4E6CB7A}

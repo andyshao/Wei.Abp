@@ -83,17 +83,12 @@ namespace Wei.Abp.Notifications
             var ids = new List<Guid>();
             foreach (var item in notificationInfo.UserIds)
             {
-                var receiveNotificationsStr=await SettingManager.GetOrNullForUserAsync(NotificationSettingNames.ReceiveNotifications,item);
-                if (!receiveNotificationsStr.IsNullOrWhiteSpace())
+                var receiveNotificationsStr = await SettingManager.GetOrNullForUserAsync(NotificationSettingNames.ReceiveNotifications, item);
+                if (receiveNotificationsStr.IsNullOrWhiteSpace() ? true : Convert.ToBoolean(receiveNotificationsStr.IsNullOrWhiteSpace()))
                 {
-                    bool receiveNotifications = true;
-                    bool.TryParse(receiveNotificationsStr,out receiveNotifications);
-                    if (receiveNotifications)
+                    if (await NotificationDefinitionManager.IsAvailableAsync(notificationInfo.NotificationName, item))
                     {
-                        if(await NotificationDefinitionManager.IsAvailableAsync(notificationInfo.NotificationName, item))
-                        {
-                            ids.Add(item);
-                        }
+                        ids.Add(item);
                     }
                 }
             }

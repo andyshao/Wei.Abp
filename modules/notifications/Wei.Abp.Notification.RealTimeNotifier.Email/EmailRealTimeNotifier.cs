@@ -30,12 +30,7 @@ namespace Wei.Abp.Notifications.RealTimeNotifier
             if (userData.EmailConfirmed && !userData.Email.IsNullOrWhiteSpace())
             {
                 var body = await TemplateRenderer.RenderAsync(
-                    StandardEmailTemplates.Message,
-                    new
-                    {
-                        message = "This is email body..."
-                    }
-                );
+                    StandardEmailTemplates.Message,userNotification);
 
                 await EmailSender.SendAsync(
                     userData.Email,

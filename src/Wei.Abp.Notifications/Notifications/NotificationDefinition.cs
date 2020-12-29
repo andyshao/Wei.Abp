@@ -19,7 +19,9 @@ namespace Wei.Abp.Notifications
             ILocalizableString description,
             string permission=null,
             List<string> featureNames=null,
-            bool featuresRequiresAll=false)
+            bool featuresRequiresAll=false,
+            bool requireSubscription=false
+            )
         {
             Name = name;
             DisplayName = displayName;
@@ -27,6 +29,7 @@ namespace Wei.Abp.Notifications
             Permission = permission;
             FeatureNames = featureNames;
             FeaturesRequiresAll = featuresRequiresAll;
+            RequireSubscription = requireSubscription;
         }
 
         /// <summary>
@@ -64,11 +67,12 @@ namespace Wei.Abp.Notifications
 
 
         public ExtraPropertyDictionary ExtraProperties { get; set; }
-        ///// <summary>
-        ///// Default value of the setting.
-        ///// </summary>
-        //[CanBeNull]
-        //public string DefaultValue { get; set; }
+
+        /// <summary>
+        /// 是否需要订阅才可以使用此通知
+        /// </summary>
+        public bool RequireSubscription { get; set; } = false;
+     
 
         /// <summary>
         /// Sets a property in the <see cref="Properties"/> dictionary.

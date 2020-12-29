@@ -22,6 +22,8 @@ namespace Wei.Abp.Notifications
 
         protected IFeatureChecker FeatureChecker { get; }
 
+        protected ISubscriptionChecker SubscriptionChecker { get;}
+
         protected IServiceProvider ServiceProvider { get; }
 
         protected IAuthorizationService AuthorizationService { get; }
@@ -30,13 +32,15 @@ namespace Wei.Abp.Notifications
             IOptions<NotificationOptions> options,
             IServiceProvider serviceProvider,
             IFeatureChecker featureChecker,
-            IAuthorizationService authorizationService)
+            IAuthorizationService authorizationService,
+            ISubscriptionChecker subscriptionChecker)
         {
             ServiceProvider = serviceProvider;
             Options = options.Value;
             FeatureChecker = featureChecker;
             AuthorizationService = authorizationService;
             NotificationDefinitions = new Lazy<IDictionary<string, NotificationDefinition>>(CreateNotificationDefinitions, true);
+            SubscriptionChecker = subscriptionChecker;
         }
 
         public virtual NotificationDefinition Get(string name)
@@ -87,9 +91,25 @@ namespace Wei.Abp.Notifications
             var notificationDefinition = GetOrNull(name);
             if (notificationDefinition == null)
             {
-                return true;
+                return false;
             }
 
+            return (await FeatureCheckAsync(notificationDefinition)
+                && await PermissionCheckAsync(notificationDefinition)
+                && await SubscriptionCheckAsync(notificationDefinition, user)
+                );
+        }
+
+        protected async Task<bool> SubscriptionCheckAsync(NotificationDefinition notificationDefinition, Guid user)
+        {
+            if (notificationDefinition.RequireSubscription)
+            {
+                return await SubscriptionChecker.IsSubscribedAsync(user, notificationDefinition.Name);
+            }
+            return true;
+        }
+
+        protected async Task<bool> FeatureCheckAsync(NotificationDefinition notificationDefinition) {
             if (notificationDefinition.FeatureNames != null)
             {
                 try
@@ -101,7 +121,11 @@ namespace Wei.Abp.Notifications
                     return false;
                 }
             }
+            return true;
+        }
 
+        protected async Task<bool> PermissionCheckAsync(NotificationDefinition notificationDefinition)
+        {
             if (notificationDefinition.Permission != null)
             {
                 var result = await AuthorizationService.AuthorizeAsync(notificationDefinition.Permission);
@@ -121,27 +145,12 @@ namespace Wei.Abp.Notifications
 
             foreach (var notificationDefinition in GetAll())
             {
-                if (notificationDefinition.Permission != null)
+                if (await FeatureCheckAsync(notificationDefinition)
+                    && await PermissionCheckAsync(notificationDefinition)
+                   && await SubscriptionCheckAsync(notificationDefinition, user))
                 {
-                    var result = await AuthorizationService.AuthorizeAsync(notificationDefinition.Permission);
-                    if (!result.Succeeded)
-                    {
-                        continue;
-                    }
+                    availableDefinitions.Add(notificationDefinition);
                 }
-
-                if (notificationDefinition.FeatureNames != null)
-                {
-                    try
-                    {
-                        await FeatureChecker.CheckEnabledAsync(notificationDefinition.FeaturesRequiresAll, notificationDefinition.FeatureNames.ToArray());
-                    }
-                    catch (AbpAuthorizationException)
-                    {
-                        continue;
-                    }
-                }
-                availableDefinitions.Add(notificationDefinition);
             }
             return availableDefinitions.ToImmutableList();
         }

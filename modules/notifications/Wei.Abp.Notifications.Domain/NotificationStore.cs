@@ -19,7 +19,6 @@ namespace Wei.Abp.Notifications.Domain
         private readonly IRepository<Notification, Guid> _notificationRepository;
         private readonly IRepository<UserNotification, Guid> _userNotificationRepository;
         private readonly IRepository<NotificationSubscription, Guid> _notificationSubscriptionRepository;
-        private readonly IUnitOfWorkManager _unitOfWorkManager;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationStore"/> class.
@@ -27,13 +26,11 @@ namespace Wei.Abp.Notifications.Domain
         public NotificationStore(
             IRepository<Notification, Guid> notificationRepository,
             IRepository<UserNotification, Guid> userNotificationRepository,
-            IRepository<NotificationSubscription, Guid> notificationSubscriptionRepository,
-            IUnitOfWorkManager unitOfWorkManager)
+            IRepository<NotificationSubscription, Guid> notificationSubscriptionRepository)
         {
             _notificationRepository = notificationRepository;
             _userNotificationRepository = userNotificationRepository;
             _notificationSubscriptionRepository = notificationSubscriptionRepository;
-            _unitOfWorkManager = unitOfWorkManager;
         }
 
         public virtual Task InsertSubscriptionAsync(NotificationSubscription subscription)

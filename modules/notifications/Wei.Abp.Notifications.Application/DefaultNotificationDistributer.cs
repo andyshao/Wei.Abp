@@ -84,7 +84,7 @@ namespace Wei.Abp.Notifications
             foreach (var item in notificationInfo.UserIds)
             {
                 var receiveNotificationsStr = await SettingManager.GetOrNullForUserAsync(NotificationSettingNames.ReceiveNotifications, item);
-                if (receiveNotificationsStr.IsNullOrWhiteSpace() ? true : Convert.ToBoolean(receiveNotificationsStr.IsNullOrWhiteSpace()))
+                if (receiveNotificationsStr.IsNullOrWhiteSpace() ? true : Convert.ToBoolean(receiveNotificationsStr))
                 {
                     if (await NotificationDefinitionManager.IsAvailableAsync(notificationInfo.NotificationName, item))
                     {

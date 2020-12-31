@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,15 @@ using Volo.Abp.Users;
 
 namespace Wei.Abp.Notification.RealTimeNotifier.SignalR
 {
-    [HubRoute("/notification-hub")]
     public class NotificationHub : AbpHub
     {
         protected IExternalUserLookupServiceProvider UserLookupServiceProvider;
+        protected ILookupNormalizer LookupNormalizer;
 
-        public NotificationHub(IExternalUserLookupServiceProvider userLookupServiceProvider)
+        public NotificationHub(IExternalUserLookupServiceProvider userLookupServiceProvider, ILookupNormalizer lookupNormalizer)
         {
             UserLookupServiceProvider = userLookupServiceProvider;
+            LookupNormalizer = lookupNormalizer;
         }
-
     }
 }

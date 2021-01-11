@@ -10,7 +10,7 @@ namespace Wei.Abp.Notifications
     public class NotificationOptions
     {
         /// <summary>
-        /// 消息通知提供
+        /// 消息定义提供
         /// </summary>
         public ITypeList<INotificationDefinitionProvider> DefinitionProviders { get; private set; }
 

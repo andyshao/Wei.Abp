@@ -26,21 +26,21 @@ namespace Wei.Abp.Notifications
         /// <returns></returns>
         public async Task<List<NotificationSubscriptionDto>> GetAllAsync()
         {
-            var subscriptions =await NotificationSubscriptionStore.GetSubscribedNotificationsAsync(CurrentUser.Id.Value);
+            var subscriptions = await NotificationSubscriptionStore.GetSubscribedNotificationsAsync(CurrentUser.Id.Value);
 
             var allDefineNotify = NotificationDefinitionManager.GetAll();
-            var outputs =new List<NotificationSubscriptionDto>();
+            var outputs = new List<NotificationSubscriptionDto>();
 
             foreach (var item in allDefineNotify)
             {
-
-                outputs.Add(new NotificationSubscriptionDto
+                var subscriptionDto = new NotificationSubscriptionDto
                 {
                     Subscription = subscriptions.Any(c => c.NotificationName == item.Name),
                     NotificationName = item.Name,
                     Description = item.Description,
                     DisplayName = item.DisplayName
-                });
+                };
+                outputs.Add(subscriptionDto);
             }
             return outputs;
         }

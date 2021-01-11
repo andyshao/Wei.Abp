@@ -18,11 +18,11 @@ namespace Wei.Abp.Notifications.Dto
         /// <summary>
         /// 显示
         /// </summary>
-        public ILocalizableString DisplayName { get; set; }
+        public string DisplayName { get; set; }
         /// <summary>
         /// 描述
         /// </summary>
-        public ILocalizableString Description { get; set; }
+        public string Description { get; set; }
         /// <summary>
         /// 是否已经订阅
         /// </summary>

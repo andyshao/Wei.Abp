@@ -37,8 +37,8 @@ namespace Wei.Abp.Notifications
                 {
                     Subscription = subscriptions.Any(c => c.NotificationName == item.Name),
                     NotificationName = item.Name,
-                    Description = item.Description,
-                    DisplayName = item.DisplayName
+                    Description = item.Description.Localize(StringLocalizerFactory),
+                    DisplayName = item.DisplayName.Localize(StringLocalizerFactory)
                 };
                 outputs.Add(subscriptionDto);
             }

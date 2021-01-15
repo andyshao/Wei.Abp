@@ -48,7 +48,8 @@ namespace Wei.Abp.Notifications.Domain
                 await _notificationSubscriptionRepository.InsertAsync(new NotificationSubscription()
                 {
                     UserId = user,
-                    NotificationName = notificationName
+                    NotificationName = notificationName,
+                    TenantId=CurrentTenant.Id
                 });
             }
         }
